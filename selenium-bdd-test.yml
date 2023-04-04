@@ -41,4 +41,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Test results
-        path: TestResults
+        path: MyProject
