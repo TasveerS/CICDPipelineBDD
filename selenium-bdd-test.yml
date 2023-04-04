@@ -1,0 +1,44 @@
+name: Selenium BDD Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]s
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Install Selenium.WebDriver
+      run: dotnet add package Selenium.WebDriver --version 4.1.0
+
+    - name: Install Selenium.WebDriver.ChromeDriver
+      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 98.0.4758.102
+
+    - name: Install NUnit3.TestAdapter
+      run: dotnet add package NUnit3.TestAdapter --version 3.17.0
+
+    - name: Install NUnit.ConsoleRunner
+      run: dotnet add package NUnit.ConsoleRunner --version 3.12.0
+
+    - name: Build and run tests
+      run: |
+        dotnet build
+        dotnet test --filter "Category=Smoke" --logger "trx;LogFileName=test_results.xml" --results-directory TestResults
+      continue-on-error: true
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: Test results
+        path: TestResults
