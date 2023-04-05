@@ -36,6 +36,7 @@ jobs:
       run: dotnet add package NUnit.ConsoleRunner --version 3.12.0
 
     - name: Build and run tests
+      working-directory: src
       run: |
         dotnet build
         dotnet test --filter "Category=Smoke" --logger "trx;LogFileName=test_results.xml" --results-directory TestResults
@@ -45,4 +46,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Test results
-        path: MyProject
+        path: TestResults
