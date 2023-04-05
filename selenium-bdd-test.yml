@@ -20,15 +20,19 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Install Selenium.WebDriver
+      working-directory: src
       run: dotnet add package Selenium.WebDriver --version 4.1.0
 
     - name: Install Selenium.WebDriver.ChromeDriver
+      working-directory: src
       run: dotnet add package Selenium.WebDriver.ChromeDriver --version 98.0.4758.102
 
     - name: Install NUnit3.TestAdapter
+      working-directory: src
       run: dotnet add package NUnit3.TestAdapter --version 3.17.0
 
     - name: Install NUnit.ConsoleRunner
+      working-directory: src
       run: dotnet add package NUnit.ConsoleRunner --version 3.12.0
 
     - name: Build and run tests
